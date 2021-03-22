@@ -1,5 +1,6 @@
 import sys
-from datetime import date, timedelta
+from datetime import date, timedelta, datetime
+print(datetime.now().strftime("%Y%m%d%H%M%S%f"))
 
 
 def check_date(inp):
@@ -23,7 +24,8 @@ def add(args):
         return print("at least one task")
     with open("checklist.txt", "a") as reader:
         task_date = check_date(args[3]) if len(args) > 3 else date.today()
-        reader.write(f"{args[2]},{task_date},n\n")
+        task_id = datetime.now().strftime("%Y%m%d%H%M%S%f")
+        reader.write(f"{task_id},{args[2]},{task_date},n\n")
     return print("task added")
 
 
@@ -45,13 +47,13 @@ def list_last_week(args):
     total_tasks = ""
     for i in [base - timedelta(days=x) for x in range(7)]:
         total_tasks += query_date(i)
-    return print(total_tasks)
+    return print(total_tasks, end="")
 
 
 def lis(args):
     if len(args) == 2:
         return print(query_date(date.today()), end="")
-    elif len(args) > 2:
+    else:
         atributes = {
             "-d": list_with_date,
             "-w":list_last_week,
@@ -59,7 +61,6 @@ def lis(args):
         }
         return atributes.get(args[2], "wrong attribute. check help for help...")(args)
         
-    
 
 def main(args):
     if len(args) < 2:
@@ -73,4 +74,5 @@ def main(args):
     
 
 if __name__ == "__main__":
+    print(datetime.now())
     main(sys.argv)
