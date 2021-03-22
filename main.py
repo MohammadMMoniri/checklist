@@ -40,12 +40,22 @@ def list_with_date(args):
     return print(query_date(check_date(args[3])), end="")
 
 
+def list_last_week(args):
+    base = date.today()
+    total_tasks = ""
+    for i in [base - timedelta(days=x) for x in range(7)]:
+        total_tasks += query_date(i)
+    return print(total_tasks)
+
+
 def lis(args):
     if len(args) == 2:
         return print(query_date(date.today()), end="")
-    elif len(args) == 4:
+    elif len(args) > 2:
         atributes = {
-            "-d": list_with_date
+            "-d": list_with_date,
+            "-w":list_last_week,
+            "-lw":list_last_week,
         }
         return atributes.get(args[2], "wrong attribute. check help for help...")(args)
         
