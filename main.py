@@ -60,7 +60,15 @@ def lis(args):
             "-lw":list_last_week,
         }
         return atributes.get(args[2], "wrong attribute. check help for help...")(args)
-        
+     
+
+def query_done(bool):
+    result = ""
+    with open("checklist.txt", "r") as lines:
+        for line in lines:
+            if line.split(',')[3] == bool+"\n":
+                result += line
+    return result
 
 def main(args):
     if len(args) < 2:
@@ -68,11 +76,12 @@ def main(args):
     functions = {
         "add": add,
         "list": lis,
-
     }
     return functions.get(args[1], "check help for help...")(args)
     
 
 if __name__ == "__main__":
+    print(query_done("n"))
+
     print(datetime.now())
     main(sys.argv)
