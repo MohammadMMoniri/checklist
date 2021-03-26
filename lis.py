@@ -1,6 +1,9 @@
 from datetime import date, timedelta, datetime
 
-from utils import query_done, query_date, check_date
+from utils import (
+    query_done, query_date, check_date,
+    print_tasks
+)
 
 
 def list_with_date(args):
@@ -17,7 +20,7 @@ def list_last_week(args):
 
 def lis(args):
     if len(args) == 2:
-        return print(query_date(date.today()), end="")
+        return print_tasks(query_date(date.today()).split("\n")[:-1])
     else:
         atributes = {
             "-d": list_with_date,
@@ -25,4 +28,3 @@ def lis(args):
             "-lw":list_last_week,
         }
         return atributes.get(args[2], "wrong attribute. check help for help...")(args)
-     
