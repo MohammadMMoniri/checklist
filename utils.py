@@ -21,7 +21,7 @@ def query_date(task_date):
     result = ""
     with open("checklist.txt", "r") as lines:
         for line in lines:
-            if line.split(",")[1] == str(task_date):
+            if line.split(",")[2] == str(task_date):
                 result += line
     return result
 
@@ -33,3 +33,13 @@ def query_done(bool):
             if line.split(',')[3] == bool+"\n":
                 result += line
     return result
+
+
+def print_tasks(tasks, task_id_dict={}):
+    print("id\ttask\t\t\tdate")
+    for num, task in enumerate(tasks, start=1):
+        task = task.split(',')
+        task_id_dict[num] = task[0]
+        task[1] = task[1] + "\t\t" if len(task[1]) < 24 else task[1][:19] + "..."
+        print(f"{num}\t{task[1]}\t{task[2]}")
+    return task_id_dict
